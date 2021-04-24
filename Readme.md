@@ -3,139 +3,112 @@ Ludum Dare 48
 
 Theme: **Deeper and deeper**
 
-Ideas
------
+Dwarves and Dragons
+-------------------
 
-Digging
-Diving
-Falling
-Delving
-Dimensioning
-Unwrapping
-Union skinning
-Burying
+Lead your band of dwarves deeper in deeper after the ever precious gold, but watch out for the dragons which guard the horde.
 
-Comparisons between deeper and deeper
-Choices
+Concept:
+* You are in charge of a group of dwarves
+* They will take the fastest path towards the deeper levels of the mine
+* You must ensure they don't wander into trouble
+* Dragons will attack dwarves that approach
+* Dwarves may fall into pits or other traps
+* Some dwarves carry useful things like crates
+* Place the crates and other tools (bridges, food, etc), to change the path and make it safe
 
+Mechanics
+---------
 
-Mechanics:
-Controlled falling
-Reach the goal to go deeper
-The same level over and over, but deeper
-Dungeon crawling
+* Camera can scroll?
+* Dwarves follow path
+* Cubes block and change path
+* Player can select dwarves
+* Player can place cubes from dwarf
+* Dwarves can die
+* Dragons attack dwarves
+* Dwarves reaching goal increment counter
+* Dragons distracted by eating
+* Pits kill and bridge
+* Tutorial
+* Menu
+* Levels 1-5
 
+Assets
+------
 
-Submarine pressure gets more as deeper
-Ore mine expands as it gets deeper
-	Sustain the mine
+* [ ] Dwarf
+	* [ ] Model
+	* [ ] Animation
+		* [ ] Walk
+		* [ ] Carry
+		* [ ] Toss
+		* [ ] Die
+	* [ ] Sound
+		* [ ] Walk
+		* [ ] Toss
+		* [ ] Die
+		* [ ] Gold
+* Dragon
+	* [ ] Model
+	* [ ] Animation
+		* [ ] Idle
+		* [ ] Attack
+		* [ ] Move?
+		* [ ] Eat?
+	* [ ] Sound
+		* [ ] Attack
+		* [ ] Spot Dwarf
+		* [ ] Move?
+		* [ ] Eat?
+* [ ] Crate
+	* [ ] Model
+	* [ ] Sound
+		* [ ] Fall
+* [ ] Bridge
+	* [ ] Model
+	* [ ] Sound
+		* [ ] Fall
+* [ ] Food
+	* [ ] Model
+	* [ ] Sound
+		* [ ] Fall
+* [ ] Terrain
+	* [ ] Road
+		* [ ] Straight
+		* [ ] Turn
+		* [ ] Crossroad
+	* [ ] Wall
+	* [ ] Chasm
+	* [ ] Empty rock?
+	* [ ] Bridge?
+	* [ ] Mine entrance/deeper
+	* [ ] Mine entrance/spawn
+	* [ ] Dragon lair/cave
+	* [ ] Spike pit?
 
-Digging holes
+Development Plan
+----------------
 
-Deeper into space
+### Saturday Morning
 
-Avoiding obstacles, as you go deeper difficulty increases
-Building something (like a mine/tunnel), as you go deeper, fewer structural supports, more requirements, greater expense, difficulty increases
+* Dwarves move
+* Player can place cubes
+* Dwarves can die
 
-Minecraft, digging mines
-Procedural caving
+### Saturday Afternoon
 
-Deeper and deeper in trouble
+* Dragons attack dwarves
+* Dwarves reach goal and complete level
+* Basic models
+* Tutorial
 
-Starts out fine, but as you try to maintain state, things get more and more crazy
-Until the end
+### Saturday Evening
 
-Red November type game
-Submarine constantly descending
-Various problems happen around the submarine
-Must go around and fix them so that the crew does not perish
-As depth increases, so does the frequency of issues
+* Levels
+* Additional obstacles/types
 
-Fish-tank theme
-	You must go into the depths, of a fishtank
-	Avoid evil sea creatures (goldfish)
-	Bypass the hazardous sea serpents (snails)
-	Navigate the treacherous labrynths (coral and castles)
+### Sunday Afternoon
 
-Pseudo serious sea explorer
-	Exploring to find wreck/trench/go deeper
-	Oxygen scrubber
-	Dive tanks
-	Command module
-	Hatch (to surface to remove sea creatures)
-	Leaks
-
-
-You choose how deep you go
-Must return to surface after you are done
-Platformer?
-Reward proportional for how deep you start
-
-Perhaps the top level is most difficult
-The deeper you go the easier it is to start
-And you get perks for starting deeper
-But if you want to finish faster, you can start at the top
-
-
-Sphere platformer
-Must find your way to the next layer down
-Top down navigation?
-Third person navigation?
-About unskinning the world by navigating layers down
-Must focus on large sphere
-and increasingly small sphere
-Gravity is odd
-How do you take advantage of spherical gravity
-Orbit
-
-
-Counter tower defense?
-Control a mob of beasts mining to the next layer down
-Each beast is resistant to a particular type of tower
-Beasts consume resources
-Resources regen over time?
-Score based on speed and efficiency
-You release beasts in waves
-Many paths, only have so much capacity?
-Choose which beasts on which path and how many
-According to resources
-Beast synergies
-Speed up
-Heal
-Shield
-Dig fast
-
-
-
-Dwarves
-Dragons
-Mines
-
-Dwarves want to dig
-Dragons want to guard their horde
-Dwarves must go in groups to make sure they survive
-They can take out each dragon
-Then progress to the next
-Finally digging out the hole at the end
-Be careful when you sent your guys though
-Because they may not survive
-
-Problems? So many assets
-
-
-
-Cave Seal
-You are a human/seal morpher
-Morph into a seal to swim through the cave
-Morph into a human to walk around the cave
-Avoid the orcas
-Don't drown as a human
-Go deeper and deeper
-
-Pro: simple
-Con: ai and animation
-Also environment and making interesting challenges
-
-
-
-
+* Sound
+* Polish
