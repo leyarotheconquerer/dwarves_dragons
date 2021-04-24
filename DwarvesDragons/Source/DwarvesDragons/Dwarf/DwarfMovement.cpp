@@ -54,7 +54,8 @@ void UDwarfMovement::RecalculatePath(UWorld* world)
 	if (_pawn)
 	{
 		auto path = UNavigationSystemV1::FindPathToActorSynchronously(GetWorld(), _pawn->GetActorLocation(), _target);
-		this->_path = path->PathPoints;
+		_path = path->PathPoints;
+		_index = 1;
 	}
 }
 
@@ -67,12 +68,17 @@ void UDwarfMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	if (_pawn)
 	{
 		const FVector movement = _pawn->ConsumeMovementInputVector();
-		_pawn->AddActorWorldOffset(movement, true);
-		if (_path.Num() > 1)
+		_pawn->AddActorWorldOffset(movement, false);
+		if (_path.Num() > _index)
 		{
-			const FVector next = _path[1];
+			const FVector next = _path[_index];
 			const FVector location = _pawn->GetActorLocation();
-			FVector direction = next - location; direction.Normalize();
+			UE_LOG(LogTemp, Display, TEXT("%s: Going to %d (distance = %f)"), *GetName(), _index, FVector::DistSquared(location, next));
+			if (FVector::DistSquared(location, next) < 2000.0f)
+			{
+				_index++;
+			}
+			FVector direction = next - location; direction.Normalize(); direction.Z = 0.f;
 			_pawn->AddMovementInput(direction, _rate * DeltaTime);
 		}
 	}

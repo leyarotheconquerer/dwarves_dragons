@@ -17,6 +17,7 @@ private:
 	AActor* _target = nullptr;
 	TArray<FVector> _path;
 	float _rate = 1;
+	int _index = 1;
 	bool _debug = false;
 	
 public:	
