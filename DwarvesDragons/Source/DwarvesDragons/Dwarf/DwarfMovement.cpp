@@ -8,6 +8,7 @@
 #include "DrawDebugHelpers.h"
 #include "NavigationPath.h"
 #include "NavigationSystem.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
 UDwarfMovement::UDwarfMovement()
@@ -29,12 +30,22 @@ void UDwarfMovement::BeginPlay()
 	
 }
 
-void UDwarfMovement::Initialize(APawn* pawn, AActor* target, float movementRate, bool debug)
+void UDwarfMovement::Initialize(APawn* pawn, TSubclassOf<AActor> targetType, float movementRate, bool debug)
 {
 	this->_pawn = pawn;
-	this->_target = target;
 	this->_rate = movementRate;
 	this->_debug = debug;
+	TArray<AActor*> targets;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), targetType, targets);
+	for(auto target : targets)
+	{
+		this->_target = target;
+		break;
+	}
+	if (!_target)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s: Unable to find target"), *_pawn->GetHumanReadableName());
+	}
 }
 
 

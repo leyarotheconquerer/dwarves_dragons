@@ -24,7 +24,7 @@ public:
 	UDwarfMovement();
 
 	UFUNCTION(BlueprintCallable, Category="Initialize")
-	void Initialize(APawn* pawn, AActor* target, float movementRate, bool debug = false);
+	void Initialize(APawn* pawn, TSubclassOf<AActor> targetType, float movementRate, bool debug = false);
 
 protected:
 	// Called when the game starts
