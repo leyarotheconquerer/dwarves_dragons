@@ -18,22 +18,18 @@ class DWARVESDRAGONS_API UDwarfCarry : public USceneComponent
 private:
 	AActor* _actor;
 	AActor* _throwable = nullptr;
+	
+	TSubclassOf<AActor> _throwableType;
+	FThrowEvent _throwEvent;
+	float _range = 100;
+	bool _debug = false;
 
 public:	
 	// Sets default values for this component's properties
 	UDwarfCarry();
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Carry")
-	TSubclassOf<AActor> objectType;
-
-	UPROPERTY(BlueprintReadWrite, Category="Carry")
-	FThrowEvent throwEvent;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Carry")
-	float range = 100;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Carry")
-	bool debug = false;
+	UFUNCTION(BlueprintCallable, Category="Initialize")
+	void Initialize(TSubclassOf<AActor> throwableType, FThrowEvent throwEvent, float range = 100, bool debug = false);
 
 protected:
 	// Called when the game starts

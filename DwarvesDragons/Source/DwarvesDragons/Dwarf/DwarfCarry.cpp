@@ -3,6 +3,8 @@
 
 #include "DwarfCarry.h"
 
+
+#include "DrawDebugHelpers.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
@@ -22,7 +24,7 @@ void UDwarfCarry::BeginPlay()
 	Super::BeginPlay();
 
 	_actor = GetAttachmentRootActor();
-	_throwable = GetWorld()->SpawnActor(objectType);
+	_throwable = GetWorld()->SpawnActor(_throwableType);
 }
 
 
@@ -31,26 +33,51 @@ void UDwarfCarry::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	if (_debug)
+	{
+		DrawDebugCircle(GetWorld(),
+			_actor->GetActorLocation(),
+			_range,
+			32,
+			FColor(255.f, 0, 0),
+			false, -1, 0, 0,
+			FVector(0, 1.f, 0.f),
+			FVector(0, 0.f, 1.f)
+		);
+	}
+
 	// ...
 }
+
+void UDwarfCarry::Initialize(TSubclassOf<AActor> throwableType, FThrowEvent throwEvent, float range, bool debug)
+{
+	_throwableType = throwableType;
+	_throwEvent = throwEvent;
+	_range = range;
+	_debug = debug;
+}
+
 
 bool UDwarfCarry::IsCarrying() { return (bool)_throwable; }
 
 bool UDwarfCarry::Throw()
 {
-	auto controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	FHitResult hit;
-	controller->GetHitResultUnderCursor(ECollisionChannel::ECC_WorldStatic, false, hit);
-	if (hit.IsValidBlockingHit())
+	if (_throwable)
 	{
-		const FVector location = _actor->GetActorLocation();
-		const float distanceSq = FVector::DistSquared(hit.Location, location);
-		const float rangeSq = range * range;
-		if (distanceSq <= rangeSq && _throwable)
+		auto controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		FHitResult hit;
+		controller->GetHitResultUnderCursor(ECollisionChannel::ECC_WorldStatic, false, hit);
+		if (hit.IsValidBlockingHit())
 		{
-			throwEvent.Execute(_throwable, hit.Location);
-			_throwable = nullptr;
-			return true;
+			const FVector location = _actor->GetActorLocation();
+			const float distanceSq = FVector::DistSquared(hit.Location, location);
+			const float rangeSq = _range * _range;
+			if (distanceSq <= rangeSq)
+			{
+				_throwEvent.Execute(_throwable, hit.Location);
+				_throwable = nullptr;
+				return true;
+			}
 		}
 	}
 	return false;
