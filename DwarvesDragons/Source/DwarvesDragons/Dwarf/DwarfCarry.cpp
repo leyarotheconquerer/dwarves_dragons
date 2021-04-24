@@ -53,6 +53,7 @@ void UDwarfCarry::Initialize(TSubclassOf<AActor> throwableType, FThrowEvent thro
 	_debug = debug;
 	_actor = GetAttachmentRootActor();
 	_throwable = GetWorld()->SpawnActor(_throwableType);
+	_throwable->AttachToComponent(this, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
 }
 
 
@@ -75,6 +76,7 @@ bool UDwarfCarry::Throw()
 			if (distanceSq <= rangeSq)
 			{
 				UE_LOG(LogTemp, Display, TEXT("%s: Was in range"), *GetName());
+				_throwable->DetachFromActor(FDetachmentTransformRules(EDetachmentRule::KeepWorld, false));
 				_throwEvent.Execute(_throwable, hit.Location);
 				_throwable = nullptr;
 				return true;
