@@ -16,7 +16,7 @@ class DWARVESDRAGONS_API UDwarfCarry : public USceneComponent
 	GENERATED_BODY()
 
 private:
-	AActor* _actor;
+	AActor* _actor = nullptr;
 	AActor* _throwable = nullptr;
 	
 	TSubclassOf<AActor> _throwableType;

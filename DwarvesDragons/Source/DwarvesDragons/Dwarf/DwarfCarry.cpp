@@ -23,8 +23,6 @@ void UDwarfCarry::BeginPlay()
 {
 	Super::BeginPlay();
 
-	_actor = GetAttachmentRootActor();
-	_throwable = GetWorld()->SpawnActor(_throwableType);
 }
 
 
@@ -35,14 +33,12 @@ void UDwarfCarry::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 
 	if (_debug)
 	{
-		DrawDebugCircle(GetWorld(),
+		DrawDebugCylinder(GetWorld(),
 			_actor->GetActorLocation(),
+			_actor->GetActorLocation() + FVector(0, 0, 10.f),
 			_range,
 			32,
-			FColor(255.f, 0, 0),
-			false, -1, 0, 0,
-			FVector(0, 1.f, 0.f),
-			FVector(0, 0.f, 1.f)
+			FColor(255.f, 0, 0)
 		);
 	}
 
@@ -55,6 +51,8 @@ void UDwarfCarry::Initialize(TSubclassOf<AActor> throwableType, FThrowEvent thro
 	_throwEvent = throwEvent;
 	_range = range;
 	_debug = debug;
+	_actor = GetAttachmentRootActor();
+	_throwable = GetWorld()->SpawnActor(_throwableType);
 }
 
 
@@ -64,16 +62,19 @@ bool UDwarfCarry::Throw()
 {
 	if (_throwable)
 	{
+		UE_LOG(LogTemp, Display, TEXT("%s: Trying to throw"), *GetName());
 		auto controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 		FHitResult hit;
 		controller->GetHitResultUnderCursor(ECollisionChannel::ECC_WorldStatic, false, hit);
 		if (hit.IsValidBlockingHit())
 		{
+			UE_LOG(LogTemp, Display, TEXT("%s: Was valid hit"), *GetName());
 			const FVector location = _actor->GetActorLocation();
 			const float distanceSq = FVector::DistSquared(hit.Location, location);
 			const float rangeSq = _range * _range;
 			if (distanceSq <= rangeSq)
 			{
+				UE_LOG(LogTemp, Display, TEXT("%s: Was in range"), *GetName());
 				_throwEvent.Execute(_throwable, hit.Location);
 				_throwable = nullptr;
 				return true;
