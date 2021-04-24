@@ -1,2 +1,10 @@
+*/.idea/
+*/.vs/
+*/Binaries/
+*/DerivedDataCache/
+*/Intermediate/
+*/Saved/
+**/RiderLink/
+
 *.blend[0-9]
 *~
