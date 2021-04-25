@@ -46,5 +46,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Attack")
 	void Attack();
 
+	UFUNCTION(BlueprintCallable, Category="Attack")
+	bool IsAlert();
+
 	void StartAttack();
 };

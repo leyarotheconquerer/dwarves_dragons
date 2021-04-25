@@ -34,7 +34,7 @@ void UDragonAttack::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 	if (_target)
 	{
-		FVector look = _target->GetActorLocation() - GetComponentLocation();
+		FVector look = _target->GetActorLocation() - _actor->GetActorLocation();
 		_actor->SetActorRotation(look.Rotation());
 	}
 	// ...
@@ -86,10 +86,17 @@ void UDragonAttack::StartAttack()
 	}
 }
 
+bool UDragonAttack::IsAlert()
+{
+	return _enemies.Num() > 0;
+}
+
+
 void UDragonAttack::Attack()
 {
 	FVector location = GetComponentLocation();
 	FRotator rotation = GetComponentRotation();
+	UE_LOG(LogTemp, Display, TEXT("%s: Spawning attack at %s with %s"), *GetName(), *location.ToString(), *rotation.ToString());
 	GetWorld()->SpawnActor(_attack, &location, &rotation);
 	GetWorld()->GetTimerManager().SetTimer(_attackTimer, this, &UDragonAttack::StartAttack, _rate, false);
 }
