@@ -38,7 +38,8 @@ void UDwarfCarry::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 			_actor->GetActorLocation() + FVector(0, 0, 10.f),
 			_range,
 			32,
-			FColor(255.f, 0, 0)
+			FColor(255.f, 0, 0),
+			false, -1, 0, 3
 		);
 	}
 
