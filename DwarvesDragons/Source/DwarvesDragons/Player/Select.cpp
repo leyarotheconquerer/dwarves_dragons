@@ -33,6 +33,12 @@ void USelect::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponen
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	if (
+		selected &&
+		selected->IsActorBeingDestroyed()
+	) {
+		selected = nullptr;
+	}
 	// ...
 }
 
@@ -42,7 +48,10 @@ void USelect::Select()
 	FHitResult hit;
 	if (selected)
 	{
-		unselectEvent.Execute(selected);
+		if (!selected->IsActorBeingDestroyed())
+		{
+			unselectEvent.Execute(selected);
+		}
 		selected = nullptr;
 	}
 	if (controller->GetHitResultUnderCursor(ECollisionChannel::ECC_Pawn, true, hit))

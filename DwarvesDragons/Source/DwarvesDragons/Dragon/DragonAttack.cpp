@@ -67,8 +67,10 @@ void UDragonAttack::StartAttack()
 	TSet<AActor*> remove;
 	for(AActor* enemy : _enemies)
 	{
-		if (FVector::DistSquared(_actor->GetActorLocation(), enemy->GetActorLocation()) >= _range * _range)
-		{
+		if (
+			enemy->IsActorBeingDestroyed() ||
+			FVector::DistSquared(_actor->GetActorLocation(), enemy->GetActorLocation()) >= _range * _range
+		) {
 			remove.Add(enemy);
 			if (_target == enemy) { _target = nullptr; }
 		}
