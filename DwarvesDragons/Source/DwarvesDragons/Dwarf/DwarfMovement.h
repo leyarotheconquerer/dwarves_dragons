@@ -16,13 +16,15 @@ private:
 	ACharacter* _character = nullptr;
 	AActor* _target = nullptr;
 	TArray<FVector> _path;
-	float _rate = 1;
 	int _index = 1;
 	bool _debug = false;
 	
 public:	
 	// Sets default values for this component's properties
 	UDwarfMovement();
+
+	UPROPERTY(BlueprintReadWrite, Category="Movement")
+	float rate = 1;
 
 	UFUNCTION(BlueprintCallable, Category="Initialize")
 	void Initialize(ACharacter* character, TSubclassOf<AActor> targetType, float movementRate, bool debug = false);

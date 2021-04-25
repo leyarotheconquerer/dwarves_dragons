@@ -34,7 +34,7 @@ void UDwarfMovement::BeginPlay()
 void UDwarfMovement::Initialize(ACharacter* character, TSubclassOf<AActor> targetType, float movementRate, bool debug)
 {
 	this->_character = character;
-	this->_rate = movementRate;
+	this->rate = movementRate;
 	this->_debug = debug;
 	TArray<AActor*> targets;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), targetType, targets);
@@ -80,7 +80,7 @@ void UDwarfMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 				_index++;
 			}
 			FVector direction = next - location; direction.Normalize(); direction.Z = 0.f;
-			_character->AddMovementInput(direction, _rate * DeltaTime);
+			_character->AddMovementInput(direction, rate * DeltaTime);
 		}
 	}
 
