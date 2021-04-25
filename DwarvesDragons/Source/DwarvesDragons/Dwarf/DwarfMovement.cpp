@@ -73,7 +73,6 @@ void UDwarfMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 		{
 			const FVector next = _path[_index];
 			const FVector location = _pawn->GetActorLocation();
-			UE_LOG(LogTemp, Display, TEXT("%s: Going to %d (distance = %f)"), *GetName(), _index, FVector::DistSquared(location, next));
 			if (FVector::DistSquared(location, next) < 2000.0f)
 			{
 				_index++;

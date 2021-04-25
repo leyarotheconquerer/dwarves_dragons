@@ -53,7 +53,10 @@ void UDwarfCarry::Initialize(TSubclassOf<AActor> throwableType, FThrowEvent thro
 	_debug = debug;
 	_actor = GetAttachmentRootActor();
 	_throwable = GetWorld()->SpawnActor(_throwableType);
-	_throwable->AttachToComponent(this, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
+	if (_throwable)
+	{
+		_throwable->AttachToComponent(this, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
+	}
 }
 
 

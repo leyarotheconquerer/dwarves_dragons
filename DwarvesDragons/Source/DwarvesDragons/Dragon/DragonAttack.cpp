@@ -73,11 +73,16 @@ void UDragonAttack::StartAttack()
 			remove.Add(enemy);
 			if (_target == enemy) { _target = nullptr; }
 		}
+		else
+		{
+			if (_debug) { UE_LOG(LogTemp, Display, TEXT("%s: %s in range"), *GetName(), *enemy->GetHumanReadableName()); }
+		}
 	}
 	for (AActor* enemy : remove) { _enemies.Remove(enemy); }
 	if (_enemies.Num() > 0)
 	{
 		if (!_target) { _target = _enemies.Array()[0]; }
+		if (_debug) { UE_LOG(LogTemp, Display, TEXT("%s: Starting attack against %d enemies"), *GetName(), _enemies.Num()); }
 		_attackEvent.Execute(_target->GetActorLocation());
 	}
 }
