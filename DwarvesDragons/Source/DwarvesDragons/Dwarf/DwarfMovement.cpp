@@ -75,7 +75,7 @@ void UDwarfMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 		{
 			const FVector next = _path[_index];
 			const FVector location = _character->GetActorLocation();
-			if (FVector::DistSquared(location, next) < 8000.0f)
+			if (FVector::DistSquared(location, next) < 5000.0f)
 			{
 				_index++;
 			}
