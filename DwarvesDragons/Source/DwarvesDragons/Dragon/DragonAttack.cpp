@@ -34,8 +34,7 @@ void UDragonAttack::TickComponent(float DeltaTime, ELevelTick TickType, FActorCo
 
 	if (_target)
 	{
-		FVector look = _target->GetActorLocation() - _actor->GetActorLocation();
-		look.Z = 0;
+		FVector look = _target->GetActorLocation() - GetComponentLocation();
 		_actor->SetActorRotation(look.Rotation());
 	}
 	// ...

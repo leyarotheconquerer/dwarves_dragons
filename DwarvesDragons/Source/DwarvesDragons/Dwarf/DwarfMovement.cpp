@@ -8,6 +8,7 @@
 #include "DrawDebugHelpers.h"
 #include "NavigationPath.h"
 #include "NavigationSystem.h"
+#include "GameFramework/Character.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
@@ -30,9 +31,9 @@ void UDwarfMovement::BeginPlay()
 	
 }
 
-void UDwarfMovement::Initialize(APawn* pawn, TSubclassOf<AActor> targetType, float movementRate, bool debug)
+void UDwarfMovement::Initialize(ACharacter* character, TSubclassOf<AActor> targetType, float movementRate, bool debug)
 {
-	this->_pawn = pawn;
+	this->_character = character;
 	this->_rate = movementRate;
 	this->_debug = debug;
 	TArray<AActor*> targets;
@@ -44,16 +45,16 @@ void UDwarfMovement::Initialize(APawn* pawn, TSubclassOf<AActor> targetType, flo
 	}
 	if (!_target)
 	{
-		UE_LOG(LogTemp, Error, TEXT("%s: Unable to find target"), *_pawn->GetHumanReadableName());
+		UE_LOG(LogTemp, Error, TEXT("%s: Unable to find target"), *_character->GetHumanReadableName());
 	}
 }
 
 
 void UDwarfMovement::RecalculatePath(UWorld* world)
 {
-	if (_pawn)
+	if (_character)
 	{
-		auto path = UNavigationSystemV1::FindPathToActorSynchronously(GetWorld(), _pawn->GetActorLocation(), _target);
+		auto path = UNavigationSystemV1::FindPathToActorSynchronously(GetWorld(), _character->GetActorLocation(), _target);
 		_path = path->PathPoints;
 		_index = 1;
 	}
@@ -65,20 +66,21 @@ void UDwarfMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (_pawn)
+	if (_character)
 	{
-		const FVector movement = _pawn->ConsumeMovementInputVector();
-		_pawn->AddActorWorldOffset(movement, false);
+		// const FVector movement = _character->ConsumeMovementInputVector();
+		// FHitResult hit;
+		// _character->AddActorWorldOffset(movement, true, &hit, ETeleportType::TeleportPhysics);
 		if (_path.Num() > _index)
 		{
 			const FVector next = _path[_index];
-			const FVector location = _pawn->GetActorLocation();
-			if (FVector::DistSquared(location, next) < 2000.0f)
+			const FVector location = _character->GetActorLocation();
+			if (FVector::DistSquared(location, next) < 8000.0f)
 			{
 				_index++;
 			}
 			FVector direction = next - location; direction.Normalize(); direction.Z = 0.f;
-			_pawn->AddMovementInput(direction, _rate * DeltaTime);
+			_character->AddMovementInput(direction, _rate * DeltaTime);
 		}
 	}
 
@@ -91,8 +93,8 @@ void UDwarfMovement::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 			DrawDebugLine(GetWorld(), current, next, FColor(255.0, 0, 0));
 		}
 
-		FVector location = _pawn->GetActorLocation() + FVector(0, 0, 10.f);
-		FVector velocity = (_pawn->GetPendingMovementInputVector() * 100.f) + location;
+		FVector location = _character->GetActorLocation() + FVector(0, 0, 10.f);
+		FVector velocity = (_character->GetPendingMovementInputVector() * 100.f) + location;
 		DrawDebugLine(GetWorld(), location, velocity, FColor(0, 255.f, 0));
 	}
 

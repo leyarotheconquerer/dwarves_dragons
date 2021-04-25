@@ -13,7 +13,7 @@ class DWARVESDRAGONS_API UDwarfMovement : public USceneComponent
 	GENERATED_BODY()
 
 private:
-	APawn* _pawn = nullptr;
+	ACharacter* _character = nullptr;
 	AActor* _target = nullptr;
 	TArray<FVector> _path;
 	float _rate = 1;
@@ -25,7 +25,7 @@ public:
 	UDwarfMovement();
 
 	UFUNCTION(BlueprintCallable, Category="Initialize")
-	void Initialize(APawn* pawn, TSubclassOf<AActor> targetType, float movementRate, bool debug = false);
+	void Initialize(ACharacter* character, TSubclassOf<AActor> targetType, float movementRate, bool debug = false);
 
 protected:
 	// Called when the game starts
